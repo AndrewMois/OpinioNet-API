@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Micropost;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MicropostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $microposts = Micropost::all();
+        // Get all microposts with username
+        $microposts = Micropost::join('users', 'microposts.user_id', '=', 'users.id')
+            ->select('microposts.*', 'users.name as user_name')
+            ->get();
         return response()->json($microposts, 200);
     }
 
