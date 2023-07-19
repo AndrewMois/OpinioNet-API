@@ -19,7 +19,7 @@ class MicropostController extends Controller
         // Get the page number from the request query parameters, or default to 1
         $page = $request->query('page', 1);
 
-        // Get all microposts with username
+        // Get all microposts with username. Use pagination to limit the number of records and allow Infinite Scroll
         $microposts = Micropost::join('users', 'microposts.user_id', '=', 'users.id')
             ->select('microposts.*', 'users.name as user_name')
             ->paginate($perPage, ['*'], 'page', $page);
