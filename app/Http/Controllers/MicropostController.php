@@ -12,12 +12,18 @@ class MicropostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = 10; // Set the number of records per page
+
+        // Get the page number from the request query parameters, or default to 1
+        $page = $request->query('page', 1);
+
         // Get all microposts with username
         $microposts = Micropost::join('users', 'microposts.user_id', '=', 'users.id')
             ->select('microposts.*', 'users.name as user_name')
-            ->get();
+            ->paginate($perPage, ['*'], 'page', $page);
+
         return response()->json($microposts, 200);
     }
 
