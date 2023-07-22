@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('FRONTEND_URL', 'https://opinionet-front-end.vercel.app')],
+    'allowed_origins' => [env('FRONTEND_URL', 'localhost:3000')],
 
     'allowed_origins_patterns' => [],
 
