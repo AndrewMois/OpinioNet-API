@@ -53,9 +53,15 @@ class MicropostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Micropost $micropost)
+    public function show($id)
     {
-        //
+        $micropost = Micropost::find($id);
+        if (!$micropost) {
+
+            return response()->json(['error' => 'Micropost not found'], 404);
+        }
+
+        return response()->json($micropost);
     }
 
     /**
