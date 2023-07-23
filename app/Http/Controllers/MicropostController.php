@@ -86,7 +86,8 @@ class MicropostController extends Controller
         return response()->json($micropost, 200);
     }
 
-    //only add functionality. This like is inside of posts table. 
+    //only add likes functionality. This likes column is placed inside of Microposts table. So, there is no relation with User table, which would need revisions like making another table for enhancing the like functionality.
+    //
     public function addLikes(Request $request, $id)
     {
         $micropost = Micropost::find($id);
