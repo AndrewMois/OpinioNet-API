@@ -75,9 +75,15 @@ class MicropostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Micropost $micropost)
+    public function update(Request $request, $id)
     {
-        //
+        //Just for testing for updating a micropost data. 
+        //I dont know why put action by multipart form in Insomnia does not include the value corresponding to the key.
+        $micropost = Micropost::find($id);
+        $micropost->title = $request->input('title');
+        $micropost->content = $request->input('content');
+        $micropost->save();
+        return response()->json($micropost, 200);
     }
 
     /**
