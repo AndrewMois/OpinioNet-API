@@ -23,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::get('/users', [UserController::class, 'index']);
 Route::apiResource('/users', 'App\Http\Controllers\UserController');
 Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
+Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);

@@ -86,6 +86,14 @@ class MicropostController extends Controller
         return response()->json($micropost, 200);
     }
 
+    public function addLikes(Request $request, $id)
+    {
+        $micropost = Micropost::find($id);
+        $micropost->increment('likes');
+        $micropost->save();
+        return response()->json($micropost, 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
