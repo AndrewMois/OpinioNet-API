@@ -104,6 +104,7 @@ class MicropostController extends Controller
      */
     public function destroy(Micropost $micropost)
     {
-        //
+        $micropost->delete();
+        return response()->json(['message' => 'Post deleted successfully'], 200);
     }
 }
