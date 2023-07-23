@@ -86,12 +86,16 @@ class MicropostController extends Controller
         return response()->json($micropost, 200);
     }
 
+    //only add functionality. This like is inside of posts table. 
     public function addLikes(Request $request, $id)
     {
         $micropost = Micropost::find($id);
         $micropost->increment('likes');
         $micropost->save();
-        return response()->json($micropost, 200);
+        //If returning all json info for a micropost 
+        // return response()->json($micropost, 200);
+        //return response()->json($micropost->likes, 200); Only returning value
+        return response()->json(['likes' => $micropost->likes], 200);
     }
 
     /**
