@@ -22,6 +22,7 @@ class MicropostController extends Controller
         // Get all microposts with username. Use pagination to limit the number of records and allow Infinite Scroll
         $microposts = Micropost::join('users', 'microposts.user_id', '=', 'users.id')
             ->select('microposts.*', 'users.name as user_name')
+            ->orderByDesc('microposts.created_at') // To get the latest posts first
             ->paginate($perPage, ['*'], 'page', $page);
 
         return response()->json($microposts, 200);
