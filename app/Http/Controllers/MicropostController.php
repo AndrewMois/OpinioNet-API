@@ -54,9 +54,15 @@ class MicropostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Micropost $micropost)
+    public function show($id)
     {
-        //
+        $micropost = Micropost::find($id);
+        if (!$micropost) {
+
+            return response()->json(['error' => 'Micropost not found'], 404);
+        }
+
+        return response()->json($micropost);
     }
 
     /**
@@ -70,9 +76,28 @@ class MicropostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Micropost $micropost)
+    public function update(Request $request, $id)
     {
-        //
+        //Just for testing for updating a micropost data. 
+        //I dont know why put action by multipart form in Insomnia does not include the value corresponding to the key.
+        $micropost = Micropost::find($id);
+        $micropost->title = $request->input('title');
+        $micropost->content = $request->input('content');
+        $micropost->save();
+        return response()->json($micropost, 200);
+    }
+
+    //only add likes functionality. This likes column is placed inside of Microposts table. So, there is no relation with User table, which would need revisions like making another table for enhancing the like functionality.
+    //
+    public function addLikes(Request $request, $id)
+    {
+        $micropost = Micropost::find($id);
+        $micropost->increment('likes');
+        $micropost->save();
+        //If returning all json info for a micropost 
+        // return response()->json($micropost, 200);
+        //return response()->json($micropost->likes, 200); Only returning value
+        return response()->json(['likes' => $micropost->likes], 200);
     }
 
     /**
@@ -80,6 +105,7 @@ class MicropostController extends Controller
      */
     public function destroy(Micropost $micropost)
     {
-        //
+        $micropost->delete();
+        return response()->json(['message' => 'Post deleted successfully'], 200);
     }
 }
