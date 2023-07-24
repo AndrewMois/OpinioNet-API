@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 // Route::get('/users', [UserController::class, 'index']);
 
 //unproteted routes
@@ -27,12 +28,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
 Route::apiResource('/users', 'App\Http\Controllers\UserController');
 Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
+Route::put('/microposts/{id}/removeLikes', [MicropostController::class, 'removeLikes']);
 Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
 
 //protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
     // Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
-    //This works if user have a token. But this should work for a specific toke(user) not for all token. 
+    //This works if user have a token. But this should work for a specific toke(user) not for all token.
 
     // Route::apiResource('/users', 'App\Http\Controllers\UserController');
     // Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
