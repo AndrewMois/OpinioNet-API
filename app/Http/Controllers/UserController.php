@@ -13,4 +13,12 @@ class UserController extends Controller
 
         return response()->json($users, 200);
     }
+
+    public function userShowMicroposts($id)
+    {
+        $user = User::find($id);
+        $microposts = $user->microposts;
+
+        return response()->json($microposts, 200);
+    }
 }
