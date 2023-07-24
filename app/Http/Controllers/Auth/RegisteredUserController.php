@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        //Generate Registerd Event
+        //Generate Registered Event
         event(new Registered($user));
 
         //Get user who was registered logged in automatically
@@ -44,6 +44,9 @@ class RegisteredUserController extends Controller
         //create user token
         $token = $user->createToken('auth_token')->plainTextToken;
         //return token as json
-        return response()->json(['token' => $token]);
+        return response()->json([
+            'token' => $token,
+            'user_id' => $user->id,
+            ]);
     }
 }
