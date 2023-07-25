@@ -22,7 +22,16 @@ class AuthenticatedSessionController extends Controller
 
         // return response()->noContent();
         $token = $request->user()->createToken('api-token')->plainTextToken;
-        return response()->json(['token' => $token]);
+        $response = response()->json([
+            'token' => $token,
+            'user_id' => $request->user()->id,
+        ]);
+
+        // Set the cookies with the desired expiration time (in minutes)
+        $response->withCookie('token', $token, 1440); // Expiration is 24 hours
+        $response->withCookie('user_id', $request->user()->id, 1440); // Expiration is 24 hours
+
+        return $response;
     }
 
     /**
