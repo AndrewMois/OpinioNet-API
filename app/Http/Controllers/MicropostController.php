@@ -78,7 +78,7 @@ class MicropostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Just for testing for updating a micropost data. 
+        //Just for testing for updating a micropost data.
         //I dont know why put action by multipart form in Insomnia does not include the value corresponding to the key.
         $micropost = Micropost::find($id);
         $micropost->title = $request->input('title');
@@ -94,11 +94,29 @@ class MicropostController extends Controller
         $micropost = Micropost::find($id);
         $micropost->increment('likes');
         $micropost->save();
-        //If returning all json info for a micropost 
+        //If returning all json info for a micropost
         // return response()->json($micropost, 200);
         //return response()->json($micropost->likes, 200); Only returning value
         return response()->json(['likes' => $micropost->likes], 200);
     }
+
+    public function removeLikes(Request $request, $id)
+    {
+        $micropost = Micropost::find($id);
+
+        if (!$micropost) {
+            return response()->json(['message' => 'Micropost not found'], 404);
+        }
+
+        // Check if the micropost has any likes before decrementing
+        if ($micropost->likes > 0) {
+            $micropost->decrement('likes');
+            $micropost->save();
+        }
+
+        return response()->json(['likes' => $micropost->likes], 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
