@@ -25,7 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //unproteted routes
 //To show microposts for a specifc user
-<<<<<<< HEAD
 // Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
 // Route::apiResource('/users', 'App\Http\Controllers\UserController');
 Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
@@ -35,19 +34,6 @@ Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
     //This works if user have a token. But this should work for a specific toke(user) not for all token. 
-=======
-Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
-Route::apiResource('/users', 'App\Http\Controllers\UserController');
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
-Route::put('/microposts/{id}/removeLikes', [MicropostController::class, 'removeLikes']);
-Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
-
-//protected routes
-Route::middleware(['auth:sanctum'])->group(function () {
-    // Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
-    //This works if user have a token. But this should work for a specific toke(user) not for all token.
->>>>>>> main
 
     Route::apiResource('/users', 'App\Http\Controllers\UserController');
     // Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
