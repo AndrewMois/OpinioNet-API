@@ -17,14 +17,18 @@ use Illuminate\Support\Facades\URL;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// Force HTTPS on production
+if (App::environment('production')) {
+    URL::forceScheme('https');
+}
+
 //The restriction applies to the GET request for the /user endpoint. It allows authenticated users to retrieve their own information.
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-if (App::environment('production')) {
-    URL::forceScheme('https');
-}
+
 
 
 // Route::get('/users', [UserController::class, 'index']);
