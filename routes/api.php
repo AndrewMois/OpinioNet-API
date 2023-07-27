@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //To show microposts for a specifc user
 Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
 Route::apiResource('/users', 'App\Http\Controllers\UserController');
+Route::get('/users/{id}', [UserController::class, 'show']);
 Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
 Route::put('/microposts/{id}/removeLikes', [MicropostController::class, 'removeLikes']);
 Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
