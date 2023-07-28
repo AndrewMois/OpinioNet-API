@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): JsonResponse
-    {
+    { //TODO: Laravel expects a cookie, instead of a header. So, is there any other way to logout?
         $request->user()->tokens()->delete();
 
         Auth::guard('web')->logout();
