@@ -13,13 +13,14 @@ class LikeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    //Return Number of likes
-    public function index()
+    //Return Number of likes to a specific micropost
+    public function index(string $id)
     {
         // $likes = Like::all();
 
         $likes = Like::join('users', 'likes.user_id', '=', 'users.id')
             // ->join('microposts', 'likes.micropost_id', '=', 'microposts.id')
+            ->where('likes.micropost_id', $id)
             ->select('likes.*', 'users.name as user_name')
             ->orderByDesc('likes.created_at')
             ->get();
@@ -49,10 +50,21 @@ class LikeController extends Controller
     public function store(Request $request)
     // public function store(Request $request, $id)  
     {
+        $micropost_id = $request->input('micropost_id'); //How can I get these ids?
+        $user_id = $request->input('user_id');
+
+        // Check if the like with the same combination of user_id and micropost_id exists
+        $existingLike = Like::where('user_id', $user_id)->where('micropost_id', $micropost_id)->first();
+
+        if ($existingLike) {
+            // The like already exists
+            return response()->json(['message' => 'The like already exists.'], 409); // 409 Conflict status code for duplicate entry
+        }
+
         $like = new Like;
         // $like->micropost_id = $id;
-        $like->micropost_id = $request->input('micropost_id'); //How can I get these ids?
-        $like->user_id = $request->input('user_id');
+        $like->micropost_id = $micropost_id;
+        $like->user_id = $user_id;
         $like->save();
         return response()->json($like, 200);
     }
