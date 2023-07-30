@@ -41,9 +41,10 @@ Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']
 Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
 // Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
 
-//protected routes
+//Protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
+    Route::delete('/microposts/{id}', [MicropostController::class, 'destroy']);
     //This works if user have a token. But this should work for a specific toke(user) not for all token.
 
 //    Route::apiResource('/users', 'App\Http\Controllers\UserController');
