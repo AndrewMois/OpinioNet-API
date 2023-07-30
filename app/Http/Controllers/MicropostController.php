@@ -55,13 +55,14 @@ class MicropostController extends Controller
      */
     public function show($id)
     {
-        $micropost = Micropost::find($id);
-        if (!$micropost) {
+        $microposts = Micropost::find($id)->orderByDesc('microposts.created_at'); // To get the latest posts first;
+
+        if (!$microposts) {
 
             return response()->json(['error' => 'Micropost not found'], 404);
         }
 
-        return response()->json($micropost);
+        return response()->json($microposts);
     }
 
     /**
