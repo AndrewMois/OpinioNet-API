@@ -123,7 +123,11 @@ class MicropostController extends Controller
      */
     public function destroy(Micropost $micropost)
     {
+        // Detach all likes associated with the micropost. This works because of the relationship defined in Micropost.php
+        $micropost->likes()->detach();
+
         $micropost->delete();
+
         return response()->json(['message' => 'Post deleted successfully'], 200);
     }
 }
