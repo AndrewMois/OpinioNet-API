@@ -24,7 +24,7 @@ class UserController extends Controller
     public function userShowMicroposts($id)
     {
         $user = User::find($id);
-        $microposts = $user->microposts->orderByDesc('microposts.created_at');
+        $microposts = $user->microposts()->orderByDesc('created_at')->get();
 
         return response()->json($microposts, 200);
     }
