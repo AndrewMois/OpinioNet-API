@@ -96,8 +96,25 @@ class LikeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        // Get the authenticated user's ID
+        //$user_id = $request->user()->id;
+        // $user_id = $request->input('user_id'); this does not work. to delete, usually seems to need to pass data by URL...
+        $user_id = 3;
+        //This is Temporary!!!!!!!!!!!!!!!!!!!!!!Need to change. 
+
+        // Find the like that matches the provided micropost_id and user_id
+        $like = Like::where('likes.micropost_id', $id)
+            ->where('likes.user_id', $user_id)
+            ->first();
+
+        // If the like is found, delete it
+        if ($like) {
+            $like->delete();
+            return response()->json(['message' => 'Like deleted successfully.'], 200);
+        } else {
+            return response()->json(['message' => 'Like not found.'], 404);
+        }
     }
 }

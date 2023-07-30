@@ -39,8 +39,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
 Route::apiResource('/users', 'App\Http\Controllers\UserController');
 Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
-Route::get('microposts/{id}/likes', [LikeController::class, 'index']);
+Route::get('/microposts/{id}/likes', [LikeController::class, 'index']);
 Route::post('/microposts/{id}/likes', [LikeController::class, 'store']);
+Route::delete('/microposts/{id}/likes', [LikeController::class, 'destroy']);
 Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
 
 
