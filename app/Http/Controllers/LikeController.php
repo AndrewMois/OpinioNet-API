@@ -47,10 +47,9 @@ class LikeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $micropost_id)
     // public function store(Request $request, $id)  
     {
-        $micropost_id = $request->input('micropost_id'); //How can I get these ids?
         $user_id = $request->input('user_id');
 
         // Check if the like with the same combination of user_id and micropost_id exists
@@ -62,7 +61,6 @@ class LikeController extends Controller
         }
 
         $like = new Like;
-        // $like->micropost_id = $id;
         $like->micropost_id = $micropost_id;
         $like->user_id = $user_id;
         $like->save();
