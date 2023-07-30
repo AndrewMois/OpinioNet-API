@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MicropostController;
 use Illuminate\Http\Request;
@@ -36,10 +37,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //unproteted routes
 //To show microposts for a specifc user
 // Route::get('/users/{id}/microposts', [UserController::class, 'userShowMicroposts']);
- Route::apiResource('/users', 'App\Http\Controllers\UserController');
+Route::apiResource('/users', 'App\Http\Controllers\UserController');
 Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
+Route::get('/microposts/{id}/likes', [LikeController::class, 'index']);
+Route::post('/microposts/{id}/likes', [LikeController::class, 'store']);
+Route::delete('/microposts/{id}/likes', [LikeController::class, 'destroy']);
 Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
-// Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
+
 
 //Protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -47,7 +51,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/microposts/{id}', [MicropostController::class, 'destroy']);
     //This works if user have a token. But this should work for a specific toke(user) not for all token.
 
-//    Route::apiResource('/users', 'App\Http\Controllers\UserController');
+    //    Route::apiResource('/users', 'App\Http\Controllers\UserController');
     // Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']);
     //It depends on http action and intended function in the controller. Need to discuss.
 });

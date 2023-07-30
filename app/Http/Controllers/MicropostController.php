@@ -46,6 +46,7 @@ class MicropostController extends Controller
         $micropost->content = $request->input('content');
         $micropost->user_id = $request->input('user_id');
 
+
         $micropost->save();
         return response()->json($micropost, 200);
     }
