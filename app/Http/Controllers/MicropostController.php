@@ -45,7 +45,7 @@ class MicropostController extends Controller
         $micropost->title = $request->input('title');
         $micropost->content = $request->input('content');
         $micropost->user_id = $request->input('user_id');
-        //$micropost->likes = 0;
+
 
         $micropost->save();
         return response()->json($micropost, 200);
@@ -56,13 +56,14 @@ class MicropostController extends Controller
      */
     public function show($id)
     {
-        $micropost = Micropost::find($id);
-        if (!$micropost) {
+        $microposts = Micropost::find($id)->orderByDesc('microposts.created_at'); // To get the latest posts first;
+
+        if (!$microposts) {
 
             return response()->json(['error' => 'Micropost not found'], 404);
         }
 
-        return response()->json($micropost);
+        return response()->json($microposts);
     }
 
     /**
@@ -123,7 +124,11 @@ class MicropostController extends Controller
      */
     public function destroy(Micropost $micropost)
     {
+        // Detach all likes associated with the micropost. This works because of the relationship defined in Micropost.php
+        $micropost->likes()->detach();
+
         $micropost->delete();
+
         return response()->json(['message' => 'Post deleted successfully'], 200);
     }
 }

@@ -14,8 +14,11 @@ class Micropost extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
     public function likes()
     {
-        return $this->hasMany(Like::class, 'micropost_id');
+        return $this->belongsToMany(User::class, 'likes', 'micropost_id', 'user_id');
+
     }
 }
