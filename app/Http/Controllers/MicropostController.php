@@ -22,6 +22,8 @@ class MicropostController extends Controller
         // Get all microposts with username. Use pagination to limit the number of records and allow Infinite Scroll
         $microposts = Micropost::join('users', 'microposts.user_id', '=', 'users.id')
             ->select('microposts.*', 'users.name as user_name')
+            ->withCount('likes') // Get the count of likes for each micropost
+            ->with('likes') // Eager load the likes relationship
             ->orderByDesc('microposts.created_at') // To get the latest posts first
             ->paginate($perPage, ['*'], 'page', $page);
 
@@ -98,23 +100,6 @@ class MicropostController extends Controller
         //If returning all json info for a micropost
         // return response()->json($micropost, 200);
         //return response()->json($micropost->likes, 200); Only returning value
-        return response()->json(['likes' => $micropost->likes], 200);
-    }
-
-    public function removeLikes(Request $request, $id)
-    {
-        $micropost = Micropost::find($id);
-
-        if (!$micropost) {
-            return response()->json(['message' => 'Micropost not found'], 404);
-        }
-
-        // Check if the micropost has any likes before decrementing
-        if ($micropost->likes > 0) {
-            $micropost->decrement('likes');
-            $micropost->save();
-        }
-
         return response()->json(['likes' => $micropost->likes], 200);
     }
 
