@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Micropost;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,12 @@ class UserController extends Controller
     public function userShowMicroposts($id)
     {
         $user = User::find($id);
-        $microposts = $user->microposts()->orderByDesc('created_at')->get();
+
+        $microposts = $user->microposts()
+            ->withCount('likes')
+            ->with('likes')
+            ->orderByDesc('created_at')
+            ->get();
 
         return response()->json($microposts, 200);
     }

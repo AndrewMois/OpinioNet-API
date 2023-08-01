@@ -30,7 +30,7 @@ class User extends Authenticatable
     }
     public function likes()
     {
-        return $this->hasMany(Like::class, 'user_id');
+        return $this->belongsToMany(Micropost::class, 'likes', 'user_id', 'micropost_id');
     }
 
     /**
