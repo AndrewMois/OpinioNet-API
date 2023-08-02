@@ -48,7 +48,7 @@ class LikeController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request, $micropost_id)
-    // public function store(Request $request, $id)  
+    // public function store(Request $request, $id)
     {
         $user_id = $request->input('user_id');
 
@@ -64,7 +64,16 @@ class LikeController extends Controller
         $like->micropost_id = $micropost_id;
         $like->user_id = $user_id;
         $like->save();
-        return response()->json($like, 200);
+
+        // Rename the keys "user_id" to "id" and "id" to "post_id" in the response JSON
+        // This is needed on front to check if post liked correctly
+        $likeResponse = [
+            'id' => $like->user_id,
+            'post_id' => $like->micropost_id,
+            'like_id' => $like->id,
+        ];
+
+        return response()->json($likeResponse, 200);
     }
 
     /**
