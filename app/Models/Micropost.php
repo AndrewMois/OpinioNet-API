@@ -23,6 +23,6 @@ class Micropost extends Model
 
     public function votes()
     {
-        return $this->belongsToMany(Vote::class, 'microposts_id');
+        return $this->belongsToMany(User::class, 'votes', 'micropost_id', 'user_id');
     }
 }

@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function votes()
     {
-        return $this->hasMany(Vote::class, 'user_id');
+        return $this->belongsToMany(Micropost::class, 'votes', 'user_id', 'micropost_id');
     }
 
     /**
