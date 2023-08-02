@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\VoteController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MicropostController;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +44,8 @@ Route::put('/microposts/{id}/addLikes', [MicropostController::class, 'addLikes']
 Route::get('/microposts/{id}/likes', [LikeController::class, 'index']);
 Route::post('/microposts/{id}/likes', [LikeController::class, 'store']);
 Route::delete('/microposts/{id}/likes', [LikeController::class, 'destroy']);
+Route::get('/microposts/{id}/votes', [VoteController::class, 'index']);
+Route::post('/microposts/{id}/votes', [VoteController::class, 'store']);
 Route::apiResource('/microposts', 'App\Http\Controllers\MicropostController');
 
 

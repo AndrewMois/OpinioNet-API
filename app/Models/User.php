@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Micropost::class, 'likes', 'user_id', 'micropost_id');
     }
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class, 'user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

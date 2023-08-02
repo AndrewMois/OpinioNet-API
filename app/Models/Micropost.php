@@ -19,6 +19,10 @@ class Micropost extends Model
     public function likes()
     {
         return $this->belongsToMany(User::class, 'likes', 'micropost_id', 'user_id');
+    }
 
+    public function votes()
+    {
+        return $this->belongsToMany(Vote::class, 'microposts_id');
     }
 }
