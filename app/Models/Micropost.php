@@ -23,6 +23,7 @@ class Micropost extends Model
 
     public function votes()
     {
-        return $this->belongsToMany(User::class, 'votes', 'micropost_id', 'user_id');
+        return $this->belongsToMany(User::class, 'votes')
+            ->withPivot('status'); // to get status of vote
     }
 }
