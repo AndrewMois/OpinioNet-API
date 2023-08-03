@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 class MicropostController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     */
+    //Aggregation process is perforemd using PHP
     public function index(Request $request)
     {
         $perPage = 10; // Set the number of records per page
@@ -23,6 +21,7 @@ class MicropostController extends Controller
             ->select('microposts.*', 'users.name as user_name')
             ->withCount('likes')
             ->with('likes')
+            ->with('votes')
             ->leftJoin('votes', 'microposts.id', '=', 'votes.micropost_id')
             ->selectRaw("
             microposts.*,
@@ -36,6 +35,53 @@ class MicropostController extends Controller
 
         return response()->json($microposts, 200);
     }
+
+    //Aggregation process is included in the database query
+    // public function index(Request $request)
+    // {
+    //     $perPage = 10; // Set the number of records per page
+    //     $page = $request->query('page', 1); // Get the page number from the request query parameters, or default to 1
+
+    //     // Get all microposts with username. Use pagination to limit the number of records and allow Infinite Scroll
+    //     $microposts = Micropost::join('users', 'microposts.user_id', '=', 'users.id')
+    //         ->select('microposts.*', 'users.name as user_name')
+    //         ->withCount('likes')
+    //         ->with('likes')
+    //         ->with('votes')
+    //         ->leftJoin('votes', 'microposts.id', '=', 'votes.micropost_id')
+    //         ->select('microposts.*', 'users.name as user_name')
+    //         ->orderByDesc('microposts.created_at')
+    //         ->paginate($perPage, ['*'], 'page', $page);
+
+    //     // Count the votes for each micropost manually
+    //     foreach ($microposts as $micropost) {
+    //         $agreeCount = 0;
+    //         $notSureCount = 0;
+    //         $disagreeCount = 0;
+
+    //         foreach ($micropost->votes as $vote) {
+    //             switch ($vote->pivot->status) {
+    //                 case 'Agree':
+    //                     $agreeCount++;
+    //                     break;
+    //                 case 'Not Sure':
+    //                     $notSureCount++;
+    //                     break;
+    //                 case 'Disagree':
+    //                     $disagreeCount++;
+    //                     break;
+    //             }
+    //         }
+
+    //         // Add the vote counts to the micropost object
+    //         $micropost->agree_count = $agreeCount;
+    //         $micropost->not_sure_count = $notSureCount;
+    //         $micropost->disagree_count = $disagreeCount;
+    //     }
+
+    //     return response()->json($microposts, 200);
+    // }
+
 
     // public function index(Request $request)
     // {
