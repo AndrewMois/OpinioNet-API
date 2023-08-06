@@ -195,6 +195,7 @@ class MicropostController extends Controller
     {
         // Detach all likes associated with the micropost. This works because of the relationship defined in Micropost.php
         $micropost->likes()->detach();
+        $micropost->votes()->detach();
 
         $micropost->delete();
 
