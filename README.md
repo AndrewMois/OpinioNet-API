@@ -1,1 +1,1 @@
-Project of Team 17, Section 1
+Project of Andrew Moiseyenko and Akeno Yuta
